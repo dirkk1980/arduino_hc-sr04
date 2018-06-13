@@ -1,3 +1,8 @@
+/*
+  Ultrasonic.h - Library for interacting with ultrasonic sensors like HC-SR04.
+  Created by Dirk.
+*/
+
 #ifndef Ultrasonic_h
 #define Ultrasonic_h
 

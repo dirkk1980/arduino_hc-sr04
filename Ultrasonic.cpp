@@ -25,9 +25,7 @@ void Ultrasonic::readSensor()
   //reading echo with a timeout calculated by the max distance of the sensor
   _echoTime = pulseIn(_sensorPin, HIGH, _sensorMaxDistance / SONIC_SPEED); 
   interrupts();
-
   _echoTime = (_echoTime / 2); 
-
 }
 
 int Ultrasonic::getDistanceCM()
