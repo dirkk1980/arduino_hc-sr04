@@ -14,16 +14,16 @@ const float sonicSpeed = 0.034;
 class Ultrasonic
 {
   public:
-    Ultrasonic (byte triggerPin, byte sensorPin, unsigned int sensorMaxDistance, unsigned int sensorMinDistance, unsigned int measurementInterval);
-    unsigned int getDistanceCM();
-    boolean getObstacle(int range);
+    Ultrasonic (byte triggerPin, byte sensorPin, int sensorMaxDistance, int sensorMinDistance, int measurementInterval);
+    int getDistanceCM(boolean average = true, int countAverageMeasurements = 10);
+    boolean getObstacle(int range, boolean average = true, int countAverageMeasurements = 10);
   private:
     byte _triggerPin;
     byte _sensorPin;
-    unsigned int _sensorMaxDistance;
-    unsigned int _sensorMinDistance;
-    unsigned int _measurementInterval;
-    unsigned long _echoTime;
-    void readSensor();
+    int _sensorMaxDistance;
+    int _sensorMinDistance;
+    int _measurementInterval;
+    unsigned long readSensor();
+    unsigned long getAverage(int countAverageMeasurements);
 };
 #endif

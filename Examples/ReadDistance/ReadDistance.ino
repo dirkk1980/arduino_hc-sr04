@@ -28,12 +28,19 @@ void setup() {
 
 void loop() {
   #ifdef DEBUG
-  Serial.println("\nMeasured distance:");
+  Serial.println("\nSingle measured distance:");
+  Serial.print(frontSensor.getDistanceCM(false));
+  Serial.print(" cm");
+
+  Serial.println("\nAverage of 10 measurements:");
   Serial.print(frontSensor.getDistanceCM());
   Serial.print(" cm");
 
-  Serial.println("\nObstacle in given range of 50 cm found:");
+  Serial.println("\nObstacle in given range of 50 cm found with avergare option on:");
   Serial.print(frontSensor.getObstacle(50));
+
+  Serial.println("\nObstacle in given range of 50 cm found with avergare option off:");
+  Serial.print(frontSensor.getObstacle(50,false));
   #endif
   //wait one second
   delay(1000);
