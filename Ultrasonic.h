@@ -14,8 +14,9 @@
 class Ultrasonic
 {
   public:
-    Ultrasonic (byte triggerPin, byte sensorPin, int sensorMaxDistance, int sensorMinDistance);
+    Ultrasonic (byte triggerPin, byte sensorPin, int sensorMaxDistance, int sensorMinDistance, byte measurementInterval);
     int getDistanceCM();
+    boolean getObstacle(int range);
   private:
     byte _triggerPin;
     byte _sensorPin;

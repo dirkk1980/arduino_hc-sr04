@@ -10,14 +10,14 @@
 //sensor specifications
 #define SENSOR_MAX_DISTANCE         400
 #define SENSOR_MIN_DISTANCE         3
-#define SENSOr_MEASUREMENT_INTERVAL 20
+#define SENSOR_MEASUREMENT_INTERVAL 20
 
 Ultrasonic frontSensor (
 FRONT_SENSOR_TRIGGER_PIN,
 FRONT_SENSOR_ECHO_PIN,
 SENSOR_MAX_DISTANCE,
 SENSOR_MIN_DISTANCE,
-SENSOr_MEASUREMENT_INTERVAL);        
+SENSOR_MEASUREMENT_INTERVAL);        
 
 void setup() {                          
   #ifdef DEBUG
@@ -31,6 +31,9 @@ void loop() {
   Serial.println("\nMeasured distance:");
   Serial.print(frontSensor.getDistanceCM());
   Serial.print(" cm");
+
+  Serial.println("\nObstacle in given range of 50 cm found:");
+  Serial.print(frontSensor.getObstacle(50));
   #endif
   //wait one second
   delay(1000);

@@ -43,3 +43,15 @@ int Ultrasonic::getDistanceCM()
   return int(_echoTime * SONIC_SPEED);
 }
 
+boolean Ultrasonic::getObstacle(int range)
+{
+  if (getDistanceCM() <= range)
+  {
+    return true;
+  }
+  else 
+  {
+    return false;
+  }
+}
+
