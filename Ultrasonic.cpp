@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "Ultrasonic.h"
 
-Ultrasonic::Ultrasonic(byte triggerPin, byte sensorPin, int sensorMaxDistance, int sensorMinDistance, byte measurementInterval)
+Ultrasonic::Ultrasonic(byte triggerPin, byte sensorPin, unsigned int sensorMaxDistance, unsigned int sensorMinDistance, unsigned int measurementInterval)
 {
   pinMode(triggerPin, OUTPUT);              
   pinMode(sensorPin, INPUT);     
@@ -25,7 +25,7 @@ void Ultrasonic::readSensor()
   digitalWrite(_triggerPin, LOW);
   
   //reading echo with a timeout calculated by the max distance of the sensor
-  _echoTime = pulseIn(_sensorPin, HIGH, _sensorMaxDistance / SONIC_SPEED); 
+  _echoTime = pulseIn(_sensorPin, HIGH, _sensorMaxDistance / sonicSpeed); 
   interrupts();
   
   //check if timeout
@@ -35,12 +35,12 @@ void Ultrasonic::readSensor()
   }
 }
 
-int Ultrasonic::getDistanceCM()
+unsigned int Ultrasonic::getDistanceCM()
 {
   readSensor();
   
   //return distance in cm
-  return int(_echoTime * SONIC_SPEED);
+  return int(_echoTime * sonicSpeed);
 }
 
 boolean Ultrasonic::getObstacle(int range)
