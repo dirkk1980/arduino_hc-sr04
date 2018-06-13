@@ -10,6 +10,7 @@ Ultrasonic::Ultrasonic(byte triggerPin, byte sensorPin, int sensorMaxDistance, i
  _sensorMaxDistance = sensorMaxDistance;
  _sensorMinDistance = sensorMinDistance;
  _measurementInterval = measurementInterval;
+ _timeout = _sensorMaxDistance / sonicSpeed;
 }
 
 unsigned long Ultrasonic::readSensor()
@@ -17,16 +18,14 @@ unsigned long Ultrasonic::readSensor()
   static unsigned long _echoTime;
   //disable trigger for x miliseconds to get a clear signal
   digitalWrite(_triggerPin, LOW);
-  delay(1);
+  delayMicroseconds(3);
   
   //sending and receiving new measurement
   noInterrupts();
   digitalWrite(_triggerPin, HIGH); 
-  delay(_measurementInterval);
+  delayMicroseconds(_measurementInterval);
   digitalWrite(_triggerPin, LOW);
-  
-  //reading echo with a timeout calculated by the max distance of the sensor
-  _echoTime = pulseIn(_sensorPin, HIGH, _sensorMaxDistance / sonicSpeed); 
+  _echoTime = pulseIn(_sensorPin, HIGH, _timeout); 
   interrupts();
   
   //check if timeout
@@ -43,6 +42,7 @@ unsigned long Ultrasonic::getAverage(int countAverageMeasurements)
     for (int i = 0; i <= countAverageMeasurements; i++)
     {
       measurementValues[i] = readSensor();
+      delay(_timeout * 2);
     }
   static unsigned long sumMeasurementvalues = 0;
     for (int i = 0; i <= countAverageMeasurements; i++)
@@ -52,7 +52,7 @@ unsigned long Ultrasonic::getAverage(int countAverageMeasurements)
     return sumMeasurementvalues / countAverageMeasurements;
 }
 
-int Ultrasonic::getDistanceCM(boolean average = true, int countAverageMeasurements = 10)
+int Ultrasonic::getDistance(boolean average = true, int countAverageMeasurements = 10)
 {
   if (average == true)
   {
@@ -66,7 +66,7 @@ int Ultrasonic::getDistanceCM(boolean average = true, int countAverageMeasuremen
 
 boolean Ultrasonic::getObstacle(int range, boolean average = true, int countAverageMeasurements = 10)
 {
-  if (getDistanceCM(average,countAverageMeasurements) <= range)
+  if (getDistance(average,countAverageMeasurements) <= range)
   {
     return true;
   }

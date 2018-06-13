@@ -8,14 +8,14 @@
 
 #include "Arduino.h"
 
-//sonic speed in centimeter/microsecond
-const float sonicSpeed = 0.034;
+//sonic speed in mm/microsecond
+const float sonicSpeed = 0.34;
 
 class Ultrasonic
 {
   public:
     Ultrasonic (byte triggerPin, byte sensorPin, int sensorMaxDistance, int sensorMinDistance, int measurementInterval);
-    int getDistanceCM(boolean average = true, int countAverageMeasurements = 10);
+    int getDistance(boolean average = true, int countAverageMeasurements = 10);
     boolean getObstacle(int range, boolean average = true, int countAverageMeasurements = 10);
   private:
     byte _triggerPin;
@@ -23,6 +23,7 @@ class Ultrasonic
     int _sensorMaxDistance;
     int _sensorMinDistance;
     int _measurementInterval;
+    unsigned long _timeout;
     unsigned long readSensor();
     unsigned long getAverage(int countAverageMeasurements);
 };

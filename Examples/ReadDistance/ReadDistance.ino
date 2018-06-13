@@ -8,8 +8,8 @@
 #define FRONT_SENSOR_TRIGGER_PIN    13
 #define FRONT_SENSOR_ECHO_PIN       12
 //sensor specifications
-#define SENSOR_MAX_DISTANCE         400
-#define SENSOR_MIN_DISTANCE         3
+#define SENSOR_MAX_DISTANCE         4000
+#define SENSOR_MIN_DISTANCE         30
 #define SENSOR_MEASUREMENT_INTERVAL 20
 
 Ultrasonic frontSensor (
@@ -29,11 +29,11 @@ void setup() {
 void loop() {
   #ifdef DEBUG
   Serial.println("\nSingle measured distance:");
-  Serial.print(frontSensor.getDistanceCM(false));
+  Serial.print(frontSensor.getDistance(false));
   Serial.print(" cm");
 
   Serial.println("\nAverage of 10 measurements:");
-  Serial.print(frontSensor.getDistanceCM());
+  Serial.print(frontSensor.getDistance());
   Serial.print(" cm");
 
   Serial.println("\nObstacle in given range of 50 cm found with avergare option on:");
