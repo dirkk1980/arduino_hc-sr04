@@ -1,2 +1,3 @@
 HCSR04 KEYWORD1
-getDistanceCM KEYWORD2
+getDistance KEYWORD2
+getObstacle KEYWORD2

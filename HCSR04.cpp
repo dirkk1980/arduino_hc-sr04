@@ -1,6 +1,6 @@
 /*
-  HCSR04.cpp - Library for interacting with HCSR04 sensors like HC-SR04.
-  Created by Dirk.
+  HCSR04.h - Library for interacting with HCSR04 sensor.
+  Created by Dirk Köhler.
 */
 
 #include "Arduino.h"
