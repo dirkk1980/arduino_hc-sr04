@@ -1,2 +1,2 @@
-Ultrasonic KEYWORD1
+HCSR04 KEYWORD1
 getDistanceCM KEYWORD2

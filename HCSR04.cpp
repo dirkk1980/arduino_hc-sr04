@@ -1,26 +1,30 @@
-#include "Arduino.h"
-#include "Ultrasonic.h"
+/*
+  HCSR04.cpp - Library for interacting with HCSR04 sensors like HC-SR04.
+  Created by Dirk.
+*/
 
-Ultrasonic::Ultrasonic(byte triggerPin, byte sensorPin, int sensorMaxDistance, int sensorMinDistance, int measurementInterval)
+#include "Arduino.h"
+#include "HCSR04.h"
+
+HCSR04::HCSR04(byte triggerPin, byte sensorPin)
 {
   pinMode(triggerPin, OUTPUT);              
   pinMode(sensorPin, INPUT);     
  _triggerPin = triggerPin;
  _sensorPin = sensorPin;
- _sensorMaxDistance = sensorMaxDistance;
- _sensorMinDistance = sensorMinDistance;
- _measurementInterval = measurementInterval;
  _timeout = _sensorMaxDistance / sonicSpeed;
 }
 
-unsigned long Ultrasonic::readSensor()
+//reading echo time from sensor
+unsigned long HCSR04::readSensor()
 {
   static unsigned long _echoTime;
+
   //disable trigger for x miliseconds to get a clear signal
   digitalWrite(_triggerPin, LOW);
   delayMicroseconds(3);
   
-  //sending and receiving new measurement
+  //sending and receiving new signal, using interrupts in fact of time critival function
   noInterrupts();
   digitalWrite(_triggerPin, HIGH); 
   delayMicroseconds(_measurementInterval);
@@ -28,7 +32,7 @@ unsigned long Ultrasonic::readSensor()
   _echoTime = pulseIn(_sensorPin, HIGH, _timeout); 
   interrupts();
   
-  //check if timeout
+  //check if returns timeout
   if (_echoTime != 0)
   {
     _echoTime = (_echoTime / 2); 
@@ -36,12 +40,14 @@ unsigned long Ultrasonic::readSensor()
   return _echoTime;
 }
 
-unsigned long Ultrasonic::getAverage(int countAverageMeasurements)
+//reading x signals and returning average value
+unsigned long HCSR04::getAverage(int countAverageMeasurements)
 {
   unsigned long measurementValues[countAverageMeasurements];
     for (int i = 0; i <= countAverageMeasurements; i++)
     {
       measurementValues[i] = readSensor();
+      //delay to prevent overlapping sensor readings
       delay(_timeout * 2);
     }
   static unsigned long sumMeasurementvalues = 0;
@@ -52,7 +58,8 @@ unsigned long Ultrasonic::getAverage(int countAverageMeasurements)
     return sumMeasurementvalues / countAverageMeasurements;
 }
 
-int Ultrasonic::getDistance(boolean average = true, int countAverageMeasurements = 10)
+//get single distance measurement value
+int HCSR04::getDistance(boolean average = true, int countAverageMeasurements = 10)
 {
   if (average == true)
   {
@@ -64,7 +71,8 @@ int Ultrasonic::getDistance(boolean average = true, int countAverageMeasurements
   }
 }
 
-boolean Ultrasonic::getObstacle(int range, boolean average = true, int countAverageMeasurements = 10)
+//check if there is an obstacle in giving range
+boolean HCSR04::getObstacle(int range, boolean average = true, int countAverageMeasurements = 10)
 {
   if (getDistance(average,countAverageMeasurements) <= range)
   {
