@@ -21,6 +21,7 @@ class Ultrasonic
     byte _sensorPin;
     int _sensorMaxDistance;
     int _sensorMinDistance;
+    byte _measurementInterval;
     unsigned long _echoTime;
     void readSensor();
 };
