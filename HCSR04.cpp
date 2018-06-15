@@ -44,18 +44,19 @@ unsigned long HCSR04::readSensor()
 unsigned long HCSR04::getAverage(int countAverageMeasurements)
 {
   unsigned long measurementValues[countAverageMeasurements];
-    for (int i = 0; i <= countAverageMeasurements; i++)
-    {
-      measurementValues[i] = readSensor();
-      //delay to prevent overlapping sensor readings
-      delay(_timeout * 2);
-    }
+  for (int i = 0; i <= countAverageMeasurements; i++)
+  {
+    measurementValues[i] = readSensor();
+    //delay to prevent overlapping sensor readings
+    delay(_timeout * 2);
+  }
+
   static unsigned long sumMeasurementvalues = 0;
-    for (int i = 0; i <= countAverageMeasurements; i++)
-    {
-      sumMeasurementvalues += measurementValues[i];
-    }
-    return sumMeasurementvalues / countAverageMeasurements;
+  for (int i = 0; i <= countAverageMeasurements; i++)
+  {
+    sumMeasurementvalues += measurementValues[i];
+  }
+  return sumMeasurementvalues / countAverageMeasurements;
 }
 
 //get single distance measurement value
@@ -83,4 +84,3 @@ boolean HCSR04::getObstacle(int range, boolean average = true, int countAverageM
     return false;
   }
 }
-

@@ -21,10 +21,15 @@ class HCSR04
 {
   public:
     HCSR04 (byte triggerPin, byte sensorPin);
+    //max measureable distance of sensor in mm
     const int _sensorMaxDistance = 4000;
+    //min measureable distance of sensor in mm
     const int _sensorMinDistance = 30;
+    //time for one measurement in microsenconds
     const int _measurementInterval = 20;
+    //get distance in mm, optional prameter can deactivate average measurement, count of measurements for avarage calculation can be set
     int getDistance(boolean average = true, int countAverageMeasurements = 10);
+    //check if an obstacle is in given range, optional prameter can deactivate average measurement, count of measurements for avarage calculation can be set
     boolean getObstacle(int range, boolean average = true, int countAverageMeasurements = 10);
   private:
     byte _triggerPin;
