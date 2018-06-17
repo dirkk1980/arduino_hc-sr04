@@ -8,8 +8,6 @@
 
 #include "Arduino.h"
 
-
-
 class HCSR04
 {
   public:
