@@ -2,8 +2,8 @@
 #include <HCSR04.h>
 
 //pin configuration
-#define FRONT_SENSOR_TRIGGER_PIN    13
-#define FRONT_SENSOR_ECHO_PIN       12
+#define FRONT_SENSOR_TRIGGER_PIN    12
+#define FRONT_SENSOR_ECHO_PIN       13
 
 HCSR04 sensor (
   FRONT_SENSOR_TRIGGER_PIN,

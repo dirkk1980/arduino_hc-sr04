@@ -43,15 +43,15 @@ unsigned long HCSR04::readSensor()
 //reading x signals and returning average value
 unsigned long HCSR04::getAverage(int countAverageMeasurements)
 {
+
   unsigned long measurementValues[countAverageMeasurements];
   for (int i = 0; i <= countAverageMeasurements; i++)
   {
     measurementValues[i] = readSensor();
     //delay to prevent overlapping sensor readings
-    delay(_timeout * 2);
+    delayMicroseconds(_timeout * 2);
   }
-
-  static unsigned long sumMeasurementvalues = 0;
+  unsigned long sumMeasurementvalues = 0;
   for (int i = 0; i <= countAverageMeasurements; i++)
   {
     sumMeasurementvalues += measurementValues[i];
@@ -75,7 +75,8 @@ int HCSR04::getDistance(boolean average = true, int countAverageMeasurements = 1
 //check if there is an obstacle in giving range
 boolean HCSR04::getObstacle(int range, boolean average = true, int countAverageMeasurements = 10)
 {
-  if (getDistance(average,countAverageMeasurements) <= range)
+  int distance = getDistance(average,countAverageMeasurements);
+  if (distance <= range && distance != 0)
   {
     return true;
   }
