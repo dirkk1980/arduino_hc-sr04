@@ -24,8 +24,15 @@ void loop() {
   Serial.print(sensor.getDistance());
   Serial.print(" mm");
 
+  Serial.println("\nAverage of 30 measurements defined manually:");
+  Serial.print(sensor.getDistance(true,30));
+  Serial.print(" mm");
+
   Serial.println("\nObstacle in given range of 500 mm found with average option on:");
   Serial.print(sensor.getObstacle(500));
+
+  Serial.println("\nObstacle in given range of 500 mm found with average option on and 30 measurements:");
+  Serial.print(sensor.getObstacle(500,true,30));
 
   Serial.println("\nObstacle in given range of 500 mm found with average option off:");
   Serial.print(sensor.getObstacle(500,false));

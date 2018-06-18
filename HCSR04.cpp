@@ -76,6 +76,7 @@ int HCSR04::getDistance(boolean average = true, int countAverageMeasurements = 1
 boolean HCSR04::getObstacle(int range, boolean average = true, int countAverageMeasurements = 10)
 {
   int distance = getDistance(average,countAverageMeasurements);
+  //check if in distance and if measurement is not zero by timeout
   if (distance <= range && distance != 0)
   {
     return true;
