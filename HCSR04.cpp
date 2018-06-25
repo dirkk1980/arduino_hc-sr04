@@ -8,10 +8,10 @@
 
 HCSR04::HCSR04(byte triggerPin, byte sensorPin)
 {
-  pinMode(triggerPin, OUTPUT);              
-  pinMode(sensorPin, INPUT);     
- _triggerPin = triggerPin;
- _sensorPin = sensorPin;
+  _triggerPin = triggerPin;
+  _sensorPin = sensorPin;
+  pinMode(_triggerPin, OUTPUT);              
+  pinMode(_sensorPin, INPUT);     
  _timeout = _sensorMaxDistance / sonicSpeed;
 }
 
