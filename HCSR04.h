@@ -19,7 +19,7 @@ class HCSR04
     //time for one measurement in microsenconds
     const int _measurementInterval = 20;
     //get distance in mm, optional prameter can deactivate average measurement, count of measurements for avarage calculation can be set
-    int getDistance(boolean average = true, int countAverageMeasurements = 10);
+    unsigned int getDistance(boolean average = true, int countAverageMeasurements = 10);
     //check if an obstacle is in given range, optional prameter can deactivate average measurement, count of measurements for avarage calculation can be set
     boolean getObstacle(int range, boolean average = true, int countAverageMeasurements = 10);
   private:
@@ -27,8 +27,10 @@ class HCSR04
     const float sonicSpeed = 0.34;
     byte _triggerPin;
     byte _sensorPin;
+    //timeout in microseconds mor one single measurement
     unsigned long _timeout;
-    unsigned long readSensor();
-    unsigned long getAverage(int countAverageMeasurements);
+    unsigned long _echoTime;
+    unsigned long readEchoTime();
+    unsigned int getAverage(int countAverageMeasurements);
 };
 #endif

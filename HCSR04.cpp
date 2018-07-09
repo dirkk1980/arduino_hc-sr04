@@ -16,10 +16,8 @@ HCSR04::HCSR04(byte triggerPin, byte sensorPin)
 }
 
 //reading echo time from sensor
-unsigned long HCSR04::readSensor()
+unsigned long HCSR04::readEchoTime()
 {
-  static unsigned long _echoTime;
-
   //disable trigger for x miliseconds to get a clear signal
   digitalWrite(_triggerPin, LOW);
   delayMicroseconds(3);
@@ -33,21 +31,25 @@ unsigned long HCSR04::readSensor()
   interrupts();
   
   //check if returns timeout
-  if (_echoTime != 0)
+  if (_echoTime > 0)
   {
     _echoTime = (_echoTime / 2); 
+  }
+  else
+  {
+    _echoTime = 0;
   }
   return _echoTime;
 }
 
 //reading x signals and returning average value
-unsigned long HCSR04::getAverage(int countAverageMeasurements)
+unsigned int HCSR04::getAverage(int countAverageMeasurements)
 {
 
   unsigned long measurementValues[countAverageMeasurements];
   for (int i = 0; i <= countAverageMeasurements; i++)
   {
-    measurementValues[i] = readSensor();
+    measurementValues[i] = readEchoTime();
     //delay to prevent overlapping sensor readings
     delayMicroseconds(_timeout * 2);
   }
@@ -60,24 +62,24 @@ unsigned long HCSR04::getAverage(int countAverageMeasurements)
 }
 
 //get single distance measurement value
-int HCSR04::getDistance(boolean average = true, int countAverageMeasurements = 10)
+unsigned int HCSR04::getDistance(boolean average = true, int countAverageMeasurements = 10)
 {
   if (average == true)
   {
-    return int(getAverage(countAverageMeasurements) * sonicSpeed);
+    return getAverage(countAverageMeasurements) * sonicSpeed;
   }
   else
   {
-    return int(readSensor() * sonicSpeed);
+    readEchoTime() * sonicSpeed;
   }
 }
 
 //check if there is an obstacle in giving range
 boolean HCSR04::getObstacle(int range, boolean average = true, int countAverageMeasurements = 10)
 {
-  int distance = getDistance(average,countAverageMeasurements);
+  int distance = getDistance(average, countAverageMeasurements);
   //check if in distance and if measurement is not zero by timeout
-  if (distance <= range && distance != 0)
+  if (distance <= range && distance > 0)
   {
     return true;
   }
