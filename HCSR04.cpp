@@ -12,7 +12,7 @@ HCSR04::HCSR04(byte triggerPin, byte sensorPin)
   _sensorPin = sensorPin;
   pinMode(_triggerPin, OUTPUT);              
   pinMode(_sensorPin, INPUT);     
- _timeout = _sensorMaxDistance / sonicSpeed;
+ _echoTimeout = _sensorMaxDistance / sonicSpeed;
 }
 
 //reading echo time from sensor
@@ -27,7 +27,7 @@ unsigned long HCSR04::readEchoTime()
   digitalWrite(_triggerPin, HIGH); 
   delayMicroseconds(_measurementInterval);
   digitalWrite(_triggerPin, LOW);
-  _echoTime = pulseIn(_sensorPin, HIGH, _timeout); 
+  _echoTime = pulseIn(_sensorPin, HIGH, _echoTimeout); 
   interrupts();
   
   //check if returns timeout
@@ -51,7 +51,7 @@ unsigned int HCSR04::getAverage(int countAverageMeasurements)
   {
     measurementValues[i] = readEchoTime();
     //delay to prevent overlapping sensor readings
-    delayMicroseconds(_timeout * 2);
+    delayMicroseconds(_echoTimeout * 2);
   }
   unsigned long sumMeasurementvalues = 0;
   for (int i = 0; i <= countAverageMeasurements; i++)

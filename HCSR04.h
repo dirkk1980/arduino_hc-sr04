@@ -28,7 +28,7 @@ class HCSR04
     byte _triggerPin;
     byte _sensorPin;
     //timeout in microseconds mor one single measurement
-    unsigned long _timeout;
+    unsigned long _echoTimeout;
     unsigned long _echoTime;
     unsigned long readEchoTime();
     unsigned int getAverage(int countAverageMeasurements);
