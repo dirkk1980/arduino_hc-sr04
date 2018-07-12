@@ -29,7 +29,6 @@ unsigned long HCSR04::readEchoTime()
   digitalWrite(_triggerPin, LOW);
   _echoTime = pulseIn(_sensorPin, HIGH, _echoTimeout); 
   interrupts();
-  
   //check if returns timeout
   if (_echoTime > 0)
   {
@@ -70,7 +69,7 @@ unsigned int HCSR04::getDistance(boolean average = true, int countAverageMeasure
   }
   else
   {
-    readEchoTime() * sonicSpeed;
+    return readEchoTime() * sonicSpeed;
   }
 }
 
